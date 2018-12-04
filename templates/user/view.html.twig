@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}<h1>Profile <strong>{{ user.username }}</strong></h1>{% endblock %}
+{% block header_img %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <p>Nom d'utilisateur :</p><strong>{{ user.username }}</strong>
+        <p>Email :</p><strong>{{ user.email }}</strong>
+
+        <p>Tâches :</p>
+        {% for task in user.tasks %}
+            <a href="{{ path('app_task_edit', {'id': task.id}) }}">{{ task.title }}</a>
+        {% else %}
+            <p>Pas de tâches.</p>
+        {% endfor %}
+    </div>
+{% endblock %}
