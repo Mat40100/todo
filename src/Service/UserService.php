@@ -24,11 +24,10 @@ class UserService
     public function editUser(User $user, Form $form)
     {
         $role = $form->get('Admin')->getData();
+        $user->setRoles("ROLE_USER");
+
         if($role === true) {
             $user->setRoles("ROLE_ADMIN");
-        }
-        else{
-            $user->setRoles("ROLE_USER");
         }
     }
 }
