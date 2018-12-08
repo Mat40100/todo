@@ -50,7 +50,7 @@ class TaskController extends AbstractController
      */
     public function edit(Task $task, Request $request, TaskService $taskService)
     {
-        if ($taskService->isRightUser($task)) {
+        if ($taskService->isRightUser($task, $this->getUser())) {
             $form = $this->createForm(TaskType::class, $task);
 
             $form->handleRequest($request);
@@ -91,7 +91,7 @@ class TaskController extends AbstractController
      */
     public function delete(Task $task, TaskService $taskService)
     {
-        if($taskService->isRightUser($task)) {
+        if($taskService->isRightUser($task, $this->getUser())) {
             $this->getDoctrine()->getManager()->remove($task);
             $this->getDoctrine()->getManager()->flush();
 

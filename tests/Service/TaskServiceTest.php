@@ -11,9 +11,7 @@ namespace App\Tests\Service;
 use App\Entity\Task;
 use App\Entity\User;
 use App\Service\TaskService;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
-use Symfony\Component\Security\Core\Security;
 
 
 class TaskServiceTest extends WebTestCase
@@ -25,10 +23,15 @@ class TaskServiceTest extends WebTestCase
         $userSimple = new User();
             $userSimple->setRoles('ROLE_USER');
 
-        $taskAnon = new Task();
-        $task = new Task();
+        $taskAnon = new Task(); /** Use to test anonymous task @var $task */
+        $task = new Task(); /** Use to test user's task */
         $task->setUser($userSimple);
 
-    $this->assertTrue();
+        $service = new TaskService();
+
+        $this->assertTrue($service->isRightUser($task, $userSimple));
+        $this->assertTrue($service->isRightUser($taskAnon, $userAdmin));
+        $this->assertFalse($service->isRightUser($taskAnon, $userSimple));
+        $this->assertFalse($service->isRightUser($task, $userAdmin));
     }
 }

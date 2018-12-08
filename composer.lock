@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "745c5c2cc6a2cd6733e5d175a1c2e3cf",
+    "content-hash": "8f667bf113c84b8157a3d1c5ef743028",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -4414,16 +4414,16 @@
         },
         {
             "name": "symfony/validator",
-            "version": "v4.1.8",
+            "version": "v4.1.9",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/validator.git",
-                "reference": "22c456065858e674528fbeef477c0332a013bfd6"
+                "reference": "ba6e80f3556872e5388ce259d6a13432ae4b7e0f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/validator/zipball/22c456065858e674528fbeef477c0332a013bfd6",
-                "reference": "22c456065858e674528fbeef477c0332a013bfd6",
+                "url": "https://api.github.com/repos/symfony/validator/zipball/ba6e80f3556872e5388ce259d6a13432ae4b7e0f",
+                "reference": "ba6e80f3556872e5388ce259d6a13432ae4b7e0f",
                 "shasum": ""
             },
             "require": {
@@ -4496,7 +4496,7 @@
             ],
             "description": "Symfony Validator Component",
             "homepage": "https://symfony.com",
-            "time": "2018-11-20T16:14:00+00:00"
+            "time": "2018-12-01T08:51:37+00:00"
         },
         {
             "name": "symfony/web-link",

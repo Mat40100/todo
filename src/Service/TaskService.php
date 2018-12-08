@@ -5,32 +5,24 @@ namespace App\Service;
 use App\Entity\Task;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorage;
+use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 use Symfony\Component\Security\Core\Security;
 
 class TaskService
 {
-    private $security;
-
-    public function __construct(Security $security)
-    {
-        $this->security = $security;
-    }
-
     /**
      * @param Task $task
+     * @param User $user
+     * @return bool
      */
-    public function toggle(Task $task)
+    public function isRightUser(Task $task, User $user)
     {
-        $task->toggle(!$task->isDone());
-    }
-
-    public function isRightUser(Task $task)
-    {
-        if($task->getUser() === $this->security->getUser()) {
+        if($task->getUser() === $user) {
             return true;
         }
 
-        if($task->getUser() === null && $this->security->isGranted('ROLE_ADMIN')) {
+        if($task->getUser() === null && in_array("ROLE_ADMIN", $user->getRoles())) {
             return true;
         }
 
