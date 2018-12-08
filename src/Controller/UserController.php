@@ -26,7 +26,7 @@ class UserController extends AbstractController
     /**
      * @Route("/users/create")
      */
-    public function create(Request $request, UserService $userService)
+    public function create(Request $request)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
@@ -34,7 +34,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userService->userCreate($user);
+            $this->getDoctrine()->getManager()->persist($user);
+            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été ajouté.");
 
@@ -50,12 +51,13 @@ class UserController extends AbstractController
      */
     public function edit(User $user, Request $request, UserService $userService)
     {
-        $form = $userService->addRoleEntry($this->createForm(UserType::class, $user), $user);
+        $form = $this->createForm(UserType::class, $user, array('user' => $user));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userService->editUser($user,$form);
+            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', "L'utilisateur a bien été modifié");
 

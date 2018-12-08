@@ -108,14 +108,13 @@ class Task
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getUser() : ?User
     {
         if($this->user){
             return $this->user;
         }
-        $user = new User;
-        $user->setUsername('Anonyme');
-        return $user;
+
+        return null;
     }
 
     public function setUser(?User $user): self

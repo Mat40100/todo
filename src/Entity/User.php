@@ -54,6 +54,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
+        $this->setRoles('ROLE_USER');
     }
 
     public function getId()

@@ -4,16 +4,20 @@ namespace App\Form;
 
 
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $user = $options['user'];
+
         $builder
             ->add('username', TextType::class, ['label' => "Nom d'utilisateur"])
             ->add('password', RepeatedType::class, [
@@ -25,5 +29,26 @@ class UserType extends AbstractType
             ])
             ->add('email', EmailType::class, ['label' => 'Adresse email'])
         ;
+
+        $data = false;
+        if (in_array("ROLE_ADMIN", $user->getRoles())) {
+            $data = true;
+        }
+        $builder->add('Admin', CheckboxType::class, [
+            'label' => 'Admin',
+            'required' => false,
+            'mapped'=>false,
+            'data' => $data
+        ]);
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    public function configureOptions(OptionsResolver $resolver)
+    {
+        // ...
+
+        $resolver->setRequired('user');
     }
 }

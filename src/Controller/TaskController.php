@@ -25,7 +25,7 @@ class TaskController extends AbstractController
      * @Route("/tasks/create")
      * @IsGranted("ROLE_USER")
      */
-    public function create(Request $request, TaskService $taskService)
+    public function create(Request $request)
     {
         $task = new Task();
         $form = $this->createForm(TaskType::class, $task);
@@ -33,7 +33,9 @@ class TaskController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $taskService->create($this->getUser(), $task);
+            $task->setUser($this->getUser());
+            $this->getDoctrine()->getManager()->persist($task);
+            $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('success', 'La tâche a été bien été ajoutée.');
 
@@ -74,11 +76,12 @@ class TaskController extends AbstractController
      * @Route("/tasks/{id}/toggle")
      * @IsGranted("ROLE_USER")
      */
-    public function toggle(Task $task, TaskService $taskService)
+    public function toggle(Task $task)
     {
-        $taskService->toggle($task);
+        $task->toggle(!$task->isDone());
+        $this->getDoctrine()->getManager()->flush();
 
-        $this->addFlash('success', sprintf('La tâche %s a bien été marquée comme faite.', $task->getTitle()));
+        $this->addFlash('success', sprintf('La tâche a bien été marquée comme faite.', $task->getTitle()));
 
         return $this->redirectToRoute('app_task_list');
     }
@@ -89,7 +92,9 @@ class TaskController extends AbstractController
     public function delete(Task $task, TaskService $taskService)
     {
         if($taskService->isRightUser($task)) {
-            $taskService->delete($task);
+            $this->getDoctrine()->getManager()->remove($task);
+            $this->getDoctrine()->getManager()->flush();
+
             $this->addFlash('success', 'La tâche a bien été supprimée.');
 
             return $this->redirectToRoute('app_task_list');

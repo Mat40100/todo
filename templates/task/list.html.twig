@@ -12,7 +12,7 @@
                     <h4 class="pull-right">
                         {% if task.isDone %}<span class="glyphicon glyphicon-ok"></span>{% else %}<span class="glyphicon glyphicon-remove"></span>{% endif %}
                     </h4>
-                    <h4><a href="{{ path('app_task_edit', {'id' : task.id }) }}">{{ task.title }}</a> par {{ task.user.username }}</h4>
+                    <h4><a href="{{ path('app_task_edit', {'id' : task.id }) }}">{{ task.title }}</a> par {{ task.user.username|default('Anonyme') }}</h4>
                     <p>{{ task.content }}</p>
                 </div>
                 <div>
