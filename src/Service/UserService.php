@@ -23,6 +23,10 @@ class UserService
      */
     public function editUser(User $user, Form $form)
     {
+        if(!in_array("ROLE_ADMIN", $user->getRoles())) {
+            return;
+        }
+
         $role = $form->get('Admin')->getData();
         $user->setRoles("ROLE_USER");
 
