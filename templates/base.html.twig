@@ -40,7 +40,7 @@
             <div class="row">
                 {% if app.user %}
                     <a href="{{ path('app_security_logout') }}" class="pull-right btn btn-danger">Se déconnecter</a>
-                    <a href="{{ path('app_user_view') }}" class="pull-right btn btn-danger">Profile</a>
+                    <a href="{{ path('app_user_view') }}" class="pull-right btn btn-success">Profile</a>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a href="{{ path("app_user_list") }}">Liste des utilisateurs</a>
                     {% endif %}

@@ -11,7 +11,7 @@
 
         <label for="password">Mot de passe :</label>
         <input type="password" id="password" name="_password" />
-
+        <input type="hidden" name="_target_path" value="{{ path("app_default_index") }}" />
         <button class="btn btn-success" type="submit">Se connecter</button>
     </form>
 {% endblock %}

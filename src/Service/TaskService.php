@@ -13,12 +13,13 @@ class TaskService
 {
     /**
      * @param Task $task
-     * @param User $user
+     * @param User|null $user
      * @return bool
      */
-    public function isRightUser(Task $task, User $user)
+
+    public function isRightUser(Task $task, ?User $user)
     {
-        if($task->getUser() === $user) {
+        if($task->getUser() === $user && $user != null) {
             return true;
         }
 

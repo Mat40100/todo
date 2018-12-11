@@ -88,6 +88,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/delete")
+     * @IsGranted("ROLE_USER")
      */
     public function delete(Task $task, TaskService $taskService)
     {

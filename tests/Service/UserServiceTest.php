@@ -44,8 +44,10 @@ class UserServiceTest extends TypeTestCase
     {
         $service = new UserService();
         $user = new User();
-        $user->setRoles('ROLE_ADMIN');
-        $initialRoles = $user->getRoles();
+        $admin = new User();
+            $admin->setRoles('ROLE_ADMIN');
+
+        $user->setRoles('ROLE_USER');
 
         $formData = [
             "username" => "Emilie",
@@ -53,18 +55,38 @@ class UserServiceTest extends TypeTestCase
                 "first" => 'ecuelles',
                 "second"=>'ecuelles'
             ],
-            "email" => "1502@gmail.com"
+            "email" => "1502@gmail.com",
+            "admin" => true,
         ];
 
-        $form = $this->factory->create(UserType::class, $user, ['user' => $user]);
-        $this->assertSame($form->get('Admin')->getData(), true); // Check form is well modified
+        $form = $this->factory->create(UserType::class, $user, ['user' => $user, 'admin' => true]);
 
         $form->submit($formData);
         $this->assertTrue($form->isSynchronized());
-        $this->assertSame($form->get('Admin')->getData(), false); //Check that form changed correctly
-        $this->assertSame($user->getRoles(), $initialRoles ); // check that User object has not changed yet
+        $this->assertSame($form->get('admin')->getData(), true);
 
         $service->editUser($user, $form);
-        $this->assertSame($user->getRoles(), ['ROLE_USER'] ); //check User object changed correctly
+
+        $this->assertTrue(in_array('ROLE_ADMIN', $user->getRoles()));
+
+        $form = $this->factory->create(UserType::class, $user, ['user' => $admin, 'admin' => true]);
+
+        $formData = [
+            "username" => "Emilie",
+            "password" => [
+                "first" => 'ecuelles',
+                "second"=>'ecuelles'
+            ],
+            "email" => "1502@gmail.com",
+            "admin" => false,
+        ];
+
+        $form->submit($formData);
+        $this->assertTrue($form->isSynchronized());
+        $this->assertSame($form->get('admin')->getData(), false);
+
+        $service->editUser($user, $form);
+
+        $this->assertTrue(in_array('ROLE_USER', $user->getRoles()));
     }
 }

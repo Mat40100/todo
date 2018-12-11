@@ -18,20 +18,21 @@ class TaskServiceTest extends WebTestCase
 {
     public function testIsRightUser()
     {
+        $service = new TaskService();
+
         $userAdmin = new User();
             $userAdmin->setRoles('ROLE_ADMIN');
         $userSimple = new User();
             $userSimple->setRoles('ROLE_USER');
 
-        $taskAnon = new Task(); /** Use to test anonymous task @var $task */
-        $task = new Task(); /** Use to test user's task */
-        $task->setUser($userSimple);
+        $task = new Task();
+            $task->setUser($userSimple);
 
-        $service = new TaskService();
+        $taskEmpty = new Task();
 
         $this->assertTrue($service->isRightUser($task, $userSimple));
-        $this->assertTrue($service->isRightUser($taskAnon, $userAdmin));
-        $this->assertFalse($service->isRightUser($taskAnon, $userSimple));
         $this->assertFalse($service->isRightUser($task, $userAdmin));
+        $this->assertFalse($service->isRightUser($task, null));
+        $this->assertTrue($service->isRightUser($taskEmpty, $userAdmin));
     }
 }

@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class TaskControllerTest extends WebTestCase
 {
-    private $adminclient;
+    private $adminClient;
     private $userClient;
     private $randomClient;
 
@@ -21,7 +21,7 @@ class TaskControllerTest extends WebTestCase
     {
         parent::__construct($name, $data, $dataName);
 
-        $this->adminclient = static::createClient(array(), array(
+        $this->adminClient = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'Mathieu',
             'PHP_AUTH_PW'   => 'kinder1234',
         ));
@@ -32,12 +32,11 @@ class TaskControllerTest extends WebTestCase
         ));
 
         $this->randomClient = $client = static::createClient();
-
     }
 
     public function testHome()
     {
-        $crawler = $this->adminclient->request('GET', '/');
+        $crawler = $this->adminClient->request('GET', '/');
 
         $this->assertSame(1, $crawler->filter('html:contains("Liste des utilisateurs")')->count());
 
@@ -46,22 +45,80 @@ class TaskControllerTest extends WebTestCase
         $this->assertSame(0, $crawler->filter('html:contains("Liste des utilisateurs")')->count());
     }
 
-    public function testList()
+    public function testTasksList()
     {
-         $this->randomClient->request('GET', '/tasks');
+        $this->randomClient->request('GET', '/tasks');
 
         $this->assertEquals(200, $this->randomClient->getResponse()->getStatusCode());
     }
 
     public function testTasksCreate()
     {
-        $this->randomClient->request('GET', '/tasks/create');
-        $crawler = $this->randomClient->followRedirect();
-        $this->assertSame(1 , $crawler->filter('html:contains("Se connecter")')->count());
-
         $crawler = $this->userClient->request('GET', '/tasks/create');
         $this->assertSame(1 , $crawler->filter('html:contains("Ajouter")')->count());
 
-        ##@TODO tesk[content] for form
+        $form = $crawler->selectButton('Ajouter')->form();
+
+        $form['task[title]'] = 'Test fonctionnel';
+        $form['task[content]'] = 'Il fonctionne !';
+
+        $crawler = $this->userClient->submit($form);
+        $crawler = $this->userClient->followRedirect();
+
+        $this->assertSame(1, $crawler->filter('html:contains("Test fonctionnel")')->count());
+
+
+    }
+
+    public function testTasksEdit()
+    {
+        $crawler = $this->adminClient->request('GET', '/tasks');
+            $this->adminClient->click($crawler->filter("a:contains('Test fonctionnel')")->link());
+            $this->assertEquals(403, $this->adminClient->getResponse()->getStatusCode());
+
+        $crawler = $this->userClient->request('GET', '/tasks');
+
+            $crawler = $this->userClient->click($crawler->filter("a:contains('Test fonctionnel')")->link());
+
+            $this->assertSame(1, $crawler->filter("html:contains('Modifier')")->count());
+
+            $form = $crawler->selectButton('Modifier')->form();
+
+            $form['task[content]'] = 'Il est modifié !';
+
+            $crawler = $this->userClient->submit($form);
+            $crawler = $this->userClient->followRedirect();
+
+            $this->assertSame(1, $crawler->filter("html:contains('Il est modifié !')")->count());
+    }
+
+    public function testTaskToggle()
+    {
+        $crawler = $this->userClient->request('GET', '/tasks');
+
+        $form = $crawler->filter("html:contains('Test fonctionnel')")->selectButton('Marquer comme faite')->form();
+
+        $crawler = $this->userClient->submit($form);
+        $crawler = $this->userClient->followRedirect();
+        $this->assertSame(1, $crawler->filter("html:contains('Marquer non terminée')")->count());
+
+        $form = $crawler->filter("html:contains('Test fonctionnel')")->selectButton('Marquer non terminée')->form();
+
+        $crawler = $this->userClient->submit($form);
+        $crawler = $this->userClient->followRedirect();
+
+        $this->assertSame(1, $crawler->filter("html:contains('Marquer comme faite')")->count());
+    }
+
+    public function testTasksDelete()
+    {
+        $crawler = $this->userClient->request('GET', '/tasks');
+
+        $form = $crawler->filter('html:contains("Test fonctionnel")')->selectButton('Supprimer')->form();
+
+        $crawler = $this->userClient->submit($form);
+        $crawler = $this->userClient->followRedirect();
+
+        $this->assertSame(0, $crawler->filter('html:contains("Test fonctionnel")')->count());
     }
 }

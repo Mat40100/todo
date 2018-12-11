@@ -31,9 +31,11 @@ class UserType extends AbstractType
         ;
 
         $data = false;
-        if (in_array("ROLE_ADMIN", $user->getRoles())) {
-            $data = true;
-            $builder->add('Admin', CheckboxType::class, [
+        if ($admin = true) {
+            if (in_array('ROLE_ADMIN', $user->getRoles())) {
+                $data = true;
+            }
+            $builder->add('admin', CheckboxType::class, [
                 'label' => 'Admin',
                 'required' => false,
                 'mapped'=>false,
@@ -50,6 +52,6 @@ class UserType extends AbstractType
     {
         // ...
 
-        $resolver->setRequired('user');
+        $resolver->setRequired('user')->setRequired('admin');
     }
 }
