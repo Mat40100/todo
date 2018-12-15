@@ -31,7 +31,7 @@ class UserControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'kinder1234',
         ));
 
-        $this->randomClient = $client = static::createClient();
+        $this->randomClient = static::createClient();
     }
 
     public function testList()
@@ -64,7 +64,7 @@ class UserControllerTest extends WebTestCase
         $form['user[password][second]'] = 'kinder1234';
         $form['user[email]'] = 'test@testeur.com' ;
 
-        $crawler = $this->randomClient->submit($form);
+        $this->randomClient->submit($form);
         $crawler = $this->randomClient->followRedirect();
 
         $this->assertSame(1, $crawler->filter('html:contains("Superbe")')->count());
@@ -87,7 +87,7 @@ class UserControllerTest extends WebTestCase
         $form['user[password][second]'] = 'kinder1234';
         $form['user[email]'] = 'test@testeur.com' ;
 
-        $crawler = $this->adminClient->submit($form);
+        $this->adminClient->submit($form);
         $crawler = $this->adminClient->followRedirect();
 
         $this->assertSame(1,$crawler->filter("html:contains('Testeur Modifié !')")->count());
@@ -99,7 +99,7 @@ class UserControllerTest extends WebTestCase
 
         $link = $crawler->filter('tr:contains("Testeur Modifié !")')->selectLink('Supprimer')->link();
 
-        $crawler = $this->adminClient->click($link);
+        $this->adminClient->click($link);
         $crawler = $this->adminClient->followRedirect();
 
         $this->assertSame(0 , $crawler->filter("html:contains('Testeur Modifié !')")->count());

@@ -44,7 +44,7 @@ class TaskControllerTest extends WebTestCase
         $form['task[title]'] = 'Test fonctionnel';
         $form['task[content]'] = 'Il fonctionne !';
 
-        $crawler = $this->userClient->submit($form);
+        $this->userClient->submit($form);
         $crawler = $this->userClient->followRedirect();
 
         $this->assertSame(1, $crawler->filter('html:contains("Test fonctionnel")')->count());
@@ -67,7 +67,7 @@ class TaskControllerTest extends WebTestCase
 
         $form['task[content]'] = 'Il est modifié !';
 
-        $crawler = $this->userClient->submit($form);
+        $this->userClient->submit($form);
         $crawler = $this->userClient->followRedirect();
 
         $this->assertSame(1, $crawler->filter("html:contains('Il est modifié !')")->count());

@@ -17,6 +17,7 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $user = $options['user'];
+        $admin = $options['admin'];
 
         $builder
             ->add('username', TextType::class, ['label' => "Nom d'utilisateur"])
@@ -31,7 +32,7 @@ class UserType extends AbstractType
         ;
 
         $data = false;
-        if ($admin = true) {
+        if ($admin === true) {
             if (in_array('ROLE_ADMIN', $user->getRoles())) {
                 $data = true;
             }
