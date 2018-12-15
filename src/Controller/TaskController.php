@@ -47,6 +47,7 @@ class TaskController extends AbstractController
 
     /**
      * @Route("/tasks/{id}/edit")
+     * @IsGranted("ROLE_USER")
      */
     public function edit(Task $task, Request $request, TaskService $taskService)
     {
