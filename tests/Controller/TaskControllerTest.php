@@ -31,7 +31,7 @@ class TaskControllerTest extends WebTestCase
             'PHP_AUTH_PW'   => 'kinder1234',
         ));
 
-        $this->randomClient = $client = static::createClient();
+        $this->randomClient = static::createClient();
     }
 
     public function testTasksCreate()

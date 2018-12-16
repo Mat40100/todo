@@ -21,9 +21,9 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $client->click($crawler->filter("a:contains('Se connecter')")->link());
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertSame(1 , $crawler->filter('html:contains("Connection")')->count());
+        $this->assertSame(1 , $crawler->filter('html:contains("Connexion")')->count());
 
-        $form = $crawler->selectButton('Connection')->form();
+        $form = $crawler->selectButton('Connexion')->form();
 
         $form['_password'] = 'kinder1234';
         $form['_username'] = 'Emilie';
