@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: Mat
  * Date: 08/12/2018
- * Time: 14:02
+ * Time: 14:02.
  */
 
 namespace App\Tests\Service;
-
 
 use App\Entity\User;
 use App\Form\UserType;
@@ -45,18 +44,18 @@ class UserServiceTest extends TypeTestCase
         $service = new UserService();
         $user = new User();
         $admin = new User();
-            $admin->setRoles('ROLE_ADMIN');
+        $admin->setRoles('ROLE_ADMIN');
 
         $user->setRoles('ROLE_USER');
 
         $formData = [
-            "username" => "Emilie",
-            "password" => [
-                "first" => 'ecuelles',
-                "second"=>'ecuelles'
+            'username' => 'Emilie',
+            'password' => [
+                'first' => 'ecuelles',
+                'second' => 'ecuelles',
             ],
-            "email" => "1502@gmail.com",
-            "admin" => true,
+            'email' => '1502@gmail.com',
+            'admin' => true,
         ];
 
         $form = $this->factory->create(UserType::class, $user, ['user' => $user, 'admin' => true]);
@@ -72,13 +71,13 @@ class UserServiceTest extends TypeTestCase
         $form = $this->factory->create(UserType::class, $user, ['user' => $admin, 'admin' => true]);
 
         $formData = [
-            "username" => "Emilie",
-            "password" => [
-                "first" => 'ecuelles',
-                "second"=>'ecuelles'
+            'username' => 'Emilie',
+            'password' => [
+                'first' => 'ecuelles',
+                'second' => 'ecuelles',
             ],
-            "email" => "1502@gmail.com",
-            "admin" => false,
+            'email' => '1502@gmail.com',
+            'admin' => false,
         ];
 
         $form->submit($formData);

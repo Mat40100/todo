@@ -3,8 +3,9 @@
  * Created by PhpStorm.
  * User: Mat
  * Date: 08/12/2018
- * Time: 11:03
+ * Time: 11:03.
  */
+
 namespace App\EventListener;
 
 use App\Entity\User;
@@ -24,21 +25,19 @@ class Doctrine
     {
         $entity = $args->getObject();
 
-         if (!$entity instanceof User) {
+        if (!$entity instanceof User) {
+            return;
+        }
 
-             return;
-         }
-
-         $password =$this->passwordEncoder->encodePassword($entity, $entity->getPassword());
-         $entity->setPassword($password);
-     }
+        $password = $this->passwordEncoder->encodePassword($entity, $entity->getPassword());
+        $entity->setPassword($password);
+    }
 
     public function prePersist(LifecycleEventArgs $args)
     {
         $entity = $args->getObject();
 
         if (!$entity instanceof User) {
-
             return;
         }
 

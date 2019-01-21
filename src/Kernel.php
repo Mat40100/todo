@@ -11,8 +11,8 @@ use Symfony\Component\HttpKernel\Kernel as BaseKernel;
 use Symfony\Component\Routing\RouteCollectionBuilder;
 
 /**
- * Class Kernel
- * @package App
+ * Class Kernel.
+ *
  * @codeCoverageIgnore
  */
 class Kernel extends BaseKernel

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: dolhen
  * Date: 15/12/18
- * Time: 10:20
+ * Time: 10:20.
  */
 
 namespace App\Tests\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -21,7 +20,7 @@ class SecurityControllerTest extends WebTestCase
         $crawler = $client->click($crawler->filter("a:contains('Se connecter')")->link());
 
         $this->assertSame(200, $client->getResponse()->getStatusCode());
-        $this->assertSame(1 , $crawler->filter('html:contains("Connexion")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Connexion")')->count());
 
         $form = $crawler->selectButton('Connexion')->form();
 

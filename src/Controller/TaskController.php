@@ -93,7 +93,7 @@ class TaskController extends AbstractController
      */
     public function delete(Task $task, TaskService $taskService)
     {
-        if($taskService->isRightUser($task, $this->getUser())) {
+        if ($taskService->isRightUser($task, $this->getUser())) {
             $this->getDoctrine()->getManager()->remove($task);
             $this->getDoctrine()->getManager()->flush();
 

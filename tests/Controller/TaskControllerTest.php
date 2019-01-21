@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: dolhen
  * Date: 10/12/18
- * Time: 19:38
+ * Time: 19:38.
  */
 
 namespace App\Tests\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -23,12 +22,12 @@ class TaskControllerTest extends WebTestCase
 
         $this->adminClient = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'Mathieu',
-            'PHP_AUTH_PW'   => 'kinder1234',
+            'PHP_AUTH_PW' => 'kinder1234',
         ));
 
         $this->userClient = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'Emilie',
-            'PHP_AUTH_PW'   => 'kinder1234',
+            'PHP_AUTH_PW' => 'kinder1234',
         ));
 
         $this->randomClient = static::createClient();
@@ -37,7 +36,7 @@ class TaskControllerTest extends WebTestCase
     public function testTasksCreate()
     {
         $crawler = $this->userClient->request('GET', '/tasks/create');
-        $this->assertSame(1 , $crawler->filter('html:contains("Ajouter")')->count());
+        $this->assertSame(1, $crawler->filter('html:contains("Ajouter")')->count());
 
         $form = $crawler->selectButton('Ajouter')->form();
 
@@ -48,7 +47,6 @@ class TaskControllerTest extends WebTestCase
         $crawler = $this->userClient->followRedirect();
 
         $this->assertSame(1, $crawler->filter('html:contains("Test fonctionnel")')->count());
-
     }
 
     public function testTasksEdit()

@@ -3,11 +3,10 @@
  * Created by PhpStorm.
  * User: dolhen
  * Date: 11/12/18
- * Time: 12:03
+ * Time: 12:03.
  */
 
 namespace App\Tests\Controller;
-
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
@@ -23,12 +22,12 @@ class UserControllerTest extends WebTestCase
 
         $this->adminClient = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'Mathieu',
-            'PHP_AUTH_PW'   => 'kinder1234',
+            'PHP_AUTH_PW' => 'kinder1234',
         ));
 
         $this->userClient = static::createClient(array(), array(
             'PHP_AUTH_USER' => 'Emilie',
-            'PHP_AUTH_PW'   => 'kinder1234',
+            'PHP_AUTH_PW' => 'kinder1234',
         ));
 
         $this->randomClient = static::createClient();
@@ -49,7 +48,7 @@ class UserControllerTest extends WebTestCase
     public function testView()
     {
         $crawler = $this->userClient->request('GET', '/profile');
-        $this-> assertSame(1, $crawler->filter("html:contains('Emilie')")->count());
+        $this->assertSame(1, $crawler->filter("html:contains('Emilie')")->count());
     }
 
     public function testCreate()
@@ -62,7 +61,7 @@ class UserControllerTest extends WebTestCase
         $form['user[username]'] = 'Testeur';
         $form['user[password][first]'] = 'kinder1234';
         $form['user[password][second]'] = 'kinder1234';
-        $form['user[email]'] = 'test@testeur.com' ;
+        $form['user[email]'] = 'test@testeur.com';
 
         $this->randomClient->submit($form);
         $crawler = $this->randomClient->followRedirect();
@@ -85,12 +84,12 @@ class UserControllerTest extends WebTestCase
         $form['user[username]'] = 'Testeur Modifié !';
         $form['user[password][first]'] = 'kinder1234';
         $form['user[password][second]'] = 'kinder1234';
-        $form['user[email]'] = 'test@testeur.com' ;
+        $form['user[email]'] = 'test@testeur.com';
 
         $this->adminClient->submit($form);
         $crawler = $this->adminClient->followRedirect();
 
-        $this->assertSame(1,$crawler->filter("html:contains('Testeur Modifié !')")->count());
+        $this->assertSame(1, $crawler->filter("html:contains('Testeur Modifié !')")->count());
     }
 
     public function testDelete()
@@ -102,6 +101,6 @@ class UserControllerTest extends WebTestCase
         $this->adminClient->click($link);
         $crawler = $this->adminClient->followRedirect();
 
-        $this->assertSame(0 , $crawler->filter("html:contains('Testeur Modifié !')")->count());
+        $this->assertSame(0, $crawler->filter("html:contains('Testeur Modifié !')")->count());
     }
 }

@@ -108,9 +108,9 @@ class Task
         return $this;
     }
 
-    public function getUser() : ?User
+    public function getUser(): ?User
     {
-        if($this->user){
+        if ($this->user) {
             return $this->user;
         }
 

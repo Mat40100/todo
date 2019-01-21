@@ -3,7 +3,7 @@
  * Created by PhpStorm.
  * User: Mat
  * Date: 07/12/2018
- * Time: 15:28
+ * Time: 15:28.
  */
 
 namespace App\Tests\Service;
@@ -13,7 +13,6 @@ use App\Entity\User;
 use App\Service\TaskService;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-
 class TaskServiceTest extends WebTestCase
 {
     public function testIsRightUser()
@@ -21,12 +20,12 @@ class TaskServiceTest extends WebTestCase
         $service = new TaskService();
 
         $userAdmin = new User();
-            $userAdmin->setRoles('ROLE_ADMIN');
+        $userAdmin->setRoles('ROLE_ADMIN');
         $userSimple = new User();
-            $userSimple->setRoles('ROLE_USER');
+        $userSimple->setRoles('ROLE_USER');
 
         $task = new Task();
-            $task->setUser($userSimple);
+        $task->setUser($userSimple);
 
         $taskEmpty = new Task();
 

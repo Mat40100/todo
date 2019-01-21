@@ -8,9 +8,7 @@ use App\Service\UserService;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class UserController extends AbstractController
 {
@@ -67,7 +65,7 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userService->editUser($user,$form);
+            $userService->editUser($user, $form);
             $this->getDoctrine()->getManager()->flush();
 
             $this->addFlash('succes, message="Vous n\'avez pas l\'accès à ces fonctions"s', "L'utilisateur a bien été modifié");

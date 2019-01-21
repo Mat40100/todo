@@ -108,6 +108,7 @@ class User implements UserInterface
         if (!in_array('ROLE_USER', $roles)) {
             $roles[] = 'ROLE_USER';
         }
+
         return $roles;
     }
 
