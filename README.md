@@ -1,4 +1,4 @@
-# Installation de Todo App
+# Installation de Todo App [![Codacy Badge](https://api.codacy.com/project/badge/Grade/61a3c138a094467baf2aa59053f1e504)](https://www.codacy.com/app/Mat40100/todo?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Mat40100/todo&amp;utm_campaign=Badge_Grade)
 
 ### Clone the repository via terminal in your web folder:
   > git clone https://github.com/mat40100/todo.git
